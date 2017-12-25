@@ -1,0 +1,19 @@
+{
+  "name": "mud",
+  "version": "0.0.1",
+  "description": "mud",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --content-base build/ --inline"
+  },
+  "author": "hbc <me@hbc.rocks>",
+  "license": "MIT",
+  "devDependencies": {
+    "file-loader": "^1.1.6",
+    "html-webpack-plugin": "^2.30.1",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}
