@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -41,11 +42,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'public/index.html',
     }),
+    new CopyWebpackPlugin([
+      {
+        from: './src/assets/hexagonTiles',
+        to: 'hexagonTiles',
+      },
+      {
+        from: './src/assets/hexagonPack',
+        to: 'hexagonPack',
+      },
+    ]),
   ],
   resolve: {
     extensions: ['.ts', '.js'],
 
     // this is only required when we "import 'jquery'"
     // 'alias': { 'jquery': path.join(__dirname, "vendor", "jquery-2.2.0.min.js") }
-  }
+  },
 };
