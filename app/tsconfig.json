@@ -8,6 +8,9 @@
     "outDir": "build"
   },
   "exclude": ["node_modules"],
-  "files": ["src/main.ts"]
+  "files": [
+    "require.d.ts",
+    "src/main.ts"
+  ]
 }
 

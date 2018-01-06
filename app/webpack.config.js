@@ -25,13 +25,20 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.tsx?$/,
         loaders: ['ts-loader'],
         exclude: [/node_modules/, paths.appNodeModules],
       },
-    ]
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+        ],
+      },
+    ],
   },
   externals: {
     // don't bundle the 'react' npm package with our bundle.js

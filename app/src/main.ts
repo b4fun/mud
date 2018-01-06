@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+require('./style/style.css')
 
 import renderHexagonMap from './pixi/hexagon_render'
 
