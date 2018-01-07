@@ -1,5 +1,9 @@
 import * as PIXI from 'pixi.js'
 
+export interface IHexagonSettings {
+    texture: PIXI.Texture
+}
+
 export default class HexagonMap {
 
     // row height base on hexagon height
@@ -15,6 +19,8 @@ export default class HexagonMap {
 
     readonly defaultTexture: PIXI.Texture
 
+    readonly hexagonSettings: {[key: number]: IHexagonSettings}
+
     constructor(
         width, height: number,
         hexagonWidth, hexagonHeight: number,
@@ -29,6 +35,7 @@ export default class HexagonMap {
         this.cols = Math.ceil((width + hexagonWidth / 2) / hexagonWidth)
 
         this.defaultTexture = defaultTexture
+        this.hexagonSettings = {}
     }
 
     render(c: PIXI.Container) {
@@ -60,11 +67,48 @@ export default class HexagonMap {
     }
 
     makeSprite(x, y: number): PIXI.Sprite {
-        const sprite = new PIXI.Sprite(this.defaultTexture)
+        const settings = this.getHexagonSettings(x, y)
+        const sprite = new PIXI.Sprite(settings.texture)
         sprite.width = this.hexagonWidth
         sprite.height = this.hexagonHeight
 
         return sprite
+    }
+
+    setHexagon(x, y: number, settings: IHexagonSettings): HexagonMap {
+        this.hexagonSettings[this.getPos(x, y)] = settings
+
+        return this
+    }
+
+    setTexture(x, y: number, texture: PIXI.Texture): HexagonMap {
+        return this.setHexagon(
+            x, y,
+            Object.assign(
+                {},
+                this.getHexagonSettings(x, y),
+                { texture, },
+            ),
+        )
+    }
+
+    private getPos(x, y: number): number {
+        return y * this.rows + x
+    }
+
+    private getHexagonSettings(x, y: number): IHexagonSettings {
+        const pos = this.getPos(x, y)
+        if (this.hexagonSettings[pos]) {
+            return this.hexagonSettings[pos]
+        }
+
+        return this.defaultHexagonSettings()
+    }
+
+    private defaultHexagonSettings(): IHexagonSettings {
+        return {
+            texture: this.defaultTexture,
+        }
     }
 
 }
