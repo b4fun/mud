@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 require('./style/style.css')
 
-import renderHexagonMap from './pixi/hexagon_render'
+import HexagonMap from './pixi/HexagonMap'
 
 const MAP_SIZE = {
     width: window.innerWidth,
@@ -18,11 +18,14 @@ PIXI.loader
     .load((loader, resources) => {
         const sandTexture: PIXI.Texture = resources.tile_sand.texture
 
-        renderHexagonMap(
-            app.stage,
+        const scale = .5
+        const hexagonWidth = sandTexture.width * scale
+        const hexagonHeight = sandTexture.height * scale
+        const hexagonMap = new HexagonMap(
+            MAP_SIZE.width, MAP_SIZE.height,
+            hexagonWidth, hexagonHeight,
             sandTexture,
-            MAP_SIZE.width,
-            MAP_SIZE.height,
-            .7,
         )
+
+        hexagonMap.render(app.stage)
     })
